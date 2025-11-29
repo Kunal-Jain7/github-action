@@ -1,12 +1,18 @@
-name: First Workflow Sample
-on: workflow_dispatch
+name: DeployTest
+on: push
 jobs:
-  first-job:
+  checkout:
     runs-on: ubuntu-latest
     steps:
-      - name: Prints Greeting
-        run: echo "Hello_World"
-      - name: Print Goodbye
-        run: |
-            echo "Thank you!!"
-            echo "Have a great day ahead, Good Bye !!"
+      - name: Checking Out Code
+        uses: actions/checkout@v3
+      - name: Installing NodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Installing Dependencies
+        run: npm ci
+      - name: Running Tests
+        run: npm test
+        
+        
